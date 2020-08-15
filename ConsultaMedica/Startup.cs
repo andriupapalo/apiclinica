@@ -41,6 +41,7 @@ namespace ConsultaMedica
             services.AddTransient<IValidator<Paciente>,PacienteValidacion>();
             services.AddTransient<IValidator<Doctor>, DoctorValidacion>();
             services.AddSingleton<DbDataContext>();
+            services.AddSingleton<DbDataDoctores>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

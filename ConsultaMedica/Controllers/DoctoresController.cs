@@ -14,9 +14,9 @@ namespace ConsultaMedica.Controllers
     [ApiController]
     public class DoctoresController : ControllerBase
     {
-        private readonly DbDataContext _dbDataContext;
+        private readonly DbDataDoctores _dbDataContext;
         private readonly IValidator<Doctor> _DoctorValidacion;
-        public DoctoresController(IValidator<Doctor> DoctorValidacion, DbDataContext dbDataContext)
+        public DoctoresController(IValidator<Doctor> DoctorValidacion, DbDataDoctores dbDataContext)
         {
             _dbDataContext = dbDataContext;
             _DoctorValidacion = DoctorValidacion;
@@ -55,6 +55,21 @@ namespace ConsultaMedica.Controllers
             return Ok(doctor);
         }
 
+
+        [HttpPut("{id}")]
+        public IActionResult Update([FromBody] Doctor doctor, int id)
+        {
+            var respuesta = _dbDataContext.Update(doctor, id);
+            if (respuesta == null)
+            {
+                return NotFound();
+            }
+            return CreatedAtRoute(
+            routeName: "GetDoctores",
+            routeValues: new { id = respuesta.Id },
+            value: respuesta);
+
+        }
 
         public List<String> response = new List<String>();
         [HttpPost]
